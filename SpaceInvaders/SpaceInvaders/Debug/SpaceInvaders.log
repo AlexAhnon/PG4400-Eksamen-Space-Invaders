@@ -1,6 +1,2 @@
-﻿  InputManager.cpp
-  WindowManager.cpp
-  main.cpp
-  Generating Code...
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\windowmanager.cpp(57): warning C4715: 'WindowManager::SetupWindow': not all control paths return a value
+﻿  main.cpp
   SpaceInvaders.vcxproj -> C:\Users\Alex\Documents\GitHub\PG4400-Eksamen-Space-Invaders\SpaceInvaders\Debug\SpaceInvaders.exe

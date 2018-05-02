@@ -1,5 +1,6 @@
 #include "WindowManager.h"
 
+// Singleton
 WindowManager * WindowManager::instance = NULL;
 
 WindowManager * WindowManager::getInstance() {
@@ -9,46 +10,43 @@ WindowManager * WindowManager::getInstance() {
 	return instance;
 }
 
+// Release singleton
 void WindowManager::Release() {
 	delete instance;
 	instance = NULL;
 }
 
+// Set up the window and initialize all the variables
 int WindowManager::SetupWindow()
 {
 	// Initialize SDL, return error if failed
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	// Error checking for window
 	if (InitializeWindow() != 0) {
 		std::cerr << "Failed to create window. SDL_Error: " << SDL_GetError() << std::endl;
-		DeleteWindow();
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	// Error checking for renderer
 	if (InitializeRenderer() != 0) {
 		std::cerr << "Failed to create renderer. SDL_Error: " << SDL_GetError() << std::endl;
-		DeleteWindow();
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	// Error checking for surface
 	if (InitializeSurface() != 0) {
 		std::cerr << "Failed to create surface and textures. SDL_Error: " << SDL_GetError() << std::endl;
-		DeleteWindow();
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	// Error checking for texture
 	if (InitializeTexture() != 0) {
 		std::cerr << "Failed to create surface and textures. SDL_Error: " << SDL_GetError() << std::endl;
-		DeleteWindow();
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	// Render it to the screen
@@ -56,6 +54,7 @@ int WindowManager::SetupWindow()
 	SDL_RenderPresent(renderer);
 }
 
+// Delete everything
 void WindowManager::DeleteWindow()
 {
 	SDL_DestroyTexture(texture);
@@ -65,6 +64,7 @@ void WindowManager::DeleteWindow()
 	SDL_Quit();
 }
 
+// Constructor
 WindowManager::WindowManager()
 {
 	window = nullptr;
@@ -74,11 +74,13 @@ WindowManager::WindowManager()
 	bgImage = "../Artwork/invaders.bmp";
 }
 
-
+// Deconstructor
 WindowManager::~WindowManager()
 {
+	DeleteWindow();
 }
 
+// Inintalize window
 int WindowManager::InitializeWindow()
 {
 	window = SDL_CreateWindow(
@@ -98,6 +100,7 @@ int WindowManager::InitializeWindow()
 	return 0;
 }
 
+// Initialize renderer
 int WindowManager::InitializeRenderer()
 {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -113,6 +116,7 @@ int WindowManager::InitializeRenderer()
 	return 0;
 }
 
+// Initialize surface
 int WindowManager::InitializeSurface()
 {
 	surface = SDL_LoadBMP(bgImage);
@@ -124,6 +128,7 @@ int WindowManager::InitializeSurface()
 	return 0;
 }
 
+// Initialize texture
 int WindowManager::InitializeTexture()
 {
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -135,6 +140,7 @@ int WindowManager::InitializeTexture()
 	return 0;
 }
 
+// Get and sets for all the variables
 SDL_Window * WindowManager::getWindow()
 {
 	return window;
