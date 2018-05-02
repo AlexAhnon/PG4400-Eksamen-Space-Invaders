@@ -19,10 +19,26 @@ void GameManager::Release() {
 // Game-loop function
 void GameManager::Update()
 {
+	Player player(winManager->getRenderer());
+
+	player.Spawn();
+
 	while (!gameOver) {
+		// FPS regulator, source: https://www.youtube.com/watch?v=jzasDqPmtPI
+		// Get frameStart at start of frame
+		frameStart = SDL_GetTicks();
+
+		// Update functions go here
 		SDL_UpdateWindowSurface(winManager->getWindow());
 		inputManager->Update();
 
+		winManager->UpdateWindow();
+
+		player.Update();
+
+		// Input functions go here
+
+		// Exit controls
 		if (SDL_PollEvent(&event)) {
 			if (event.type == SDL_KEYDOWN) {
 				if (event.key.keysym.sym == SDLK_ESCAPE) {
@@ -33,6 +49,24 @@ void GameManager::Update()
 				gameOver = true;
 			}
 		}
+
+		// Player controls while making sure sprite can't go out of bounds
+		if (inputManager->KeyStillDown(SDL_SCANCODE_A) && player.getX() > 0) {
+			player.moveLeft(3);
+		}
+
+		// Minus 50 to account for the width of the player sprite
+		if (inputManager->KeyStillDown(SDL_SCANCODE_D) && player.getX() < winManager->screenWidth - 50) {
+			player.moveRight(3);
+		}
+
+		// Get frameTime at end of frame
+		frameTime = SDL_GetTicks() - frameStart;
+
+		// Delay by the difference to regulate FPS
+		if (frameDelay > frameTime) {
+			SDL_Delay(frameDelay - frameTime);
+		}
 	}
 }
 
@@ -41,8 +75,6 @@ GameManager::GameManager()
 {
 	inputManager = InputManager::getInstance();
 	winManager = WindowManager::getInstance();
-
-	gameOver = false;
 
 	if (winManager->SetupWindow() != 0) {
 		Release();

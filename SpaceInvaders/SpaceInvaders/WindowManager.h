@@ -10,6 +10,10 @@ public:
 
 	int SetupWindow();
 	void DeleteWindow();
+	void UpdateWindow();
+
+	int screenWidth = 500;
+	int screenHeight = 550;
 
 	SDL_Window* getWindow();
 	SDL_Renderer* getRenderer();
@@ -22,10 +26,8 @@ private:
 	SDL_Surface* surface;
 	SDL_Texture* texture;
 
-	const char* bgImage;
-	const char* gameTitle;
-	int screenWidth;
-	int screenHeight;
+	const char* bgImage = "../Artwork/invaders.bmp";
+	const char* gameTitle = "Space Invaders";
 
 	int InitializeWindow();
 	int InitializeRenderer();

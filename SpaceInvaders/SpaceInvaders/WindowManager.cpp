@@ -50,8 +50,9 @@ int WindowManager::SetupWindow()
 	}
 
 	// Render it to the screen
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
+	UpdateWindow();
+
+	return 0;
 }
 
 // Delete everything
@@ -64,14 +65,17 @@ void WindowManager::DeleteWindow()
 	SDL_Quit();
 }
 
+void WindowManager::UpdateWindow() {
+	SDL_RenderPresent(renderer);
+	SDL_RenderClear(renderer);
+
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+}
+
 // Constructor
 WindowManager::WindowManager()
 {
 	window = nullptr;
-	gameTitle = "Space Invaders";
-	screenHeight = 550;
-	screenWidth = 500;
-	bgImage = "../Artwork/invaders.bmp";
 }
 
 // Deconstructor

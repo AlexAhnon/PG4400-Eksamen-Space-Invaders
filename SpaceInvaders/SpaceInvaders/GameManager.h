@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include "WindowManager.h"
 #include "InputManager.h"
+#include "Player.h"
+#include <SDL_timer.h>
 
 class GameManager
 {
@@ -17,10 +19,16 @@ private:
 	InputManager* inputManager;
 	WindowManager* winManager;
 
-	bool gameOver;
+	bool gameOver = false;
 	SDL_Event event;
 
 	static GameManager* instance;
+
+	const int FPS = 60;
+	const int frameDelay = 1000 / FPS;
+
+	Uint32 frameStart;
+	int frameTime;
 
 	GameManager();
 	~GameManager();
