@@ -11,11 +11,6 @@ public:
 	int SetupWindow();
 	void DeleteWindow();
 
-	int InitializeWindow();
-	int InitializeRenderer();
-	int InitializeSurface();
-	int InitializeTexture();
-
 	SDL_Window* getWindow();
 	SDL_Renderer* getRenderer();
 	SDL_Surface* getSurface();
@@ -28,10 +23,14 @@ private:
 	SDL_Texture* texture;
 
 	const char* bgImage;
-
 	const char* gameTitle;
 	int screenWidth;
 	int screenHeight;
+
+	int InitializeWindow();
+	int InitializeRenderer();
+	int InitializeSurface();
+	int InitializeTexture();
 
 	static WindowManager* instance;
 
