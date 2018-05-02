@@ -1,0 +1,7 @@
+﻿  stdafx.cpp
+  InputManager.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\inputmanager.cpp(46): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  main.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(15): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  WindowManager.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\windowmanager.cpp(51): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
