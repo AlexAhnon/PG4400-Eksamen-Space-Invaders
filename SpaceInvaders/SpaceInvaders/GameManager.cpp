@@ -21,7 +21,7 @@ void GameManager::Initialize() {
 	player = Player(winManager->getRenderer());
 
 	// Spawn initializations
-	player.Spawn();
+	player.Draw();
 }
 
 void GameManager::Update() {

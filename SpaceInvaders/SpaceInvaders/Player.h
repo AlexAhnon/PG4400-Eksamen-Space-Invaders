@@ -1,27 +1,21 @@
 #pragma once
 #include <SDL.h>
 #include "WindowManager.h"
+#include "Sprite.h"
 
-class Player {
+class Player : public Sprite {
 public:
-	Player(SDL_Renderer* rend);
-
 	Player();
+	Player(SDL_Renderer* rend);
 	~Player();
 
-	void Spawn();
-	void Update();
 	void MoveLeft(int rate);
 	void MoveRight(int rate);
-
-	int getX();
 private:
-	const char* playerIcon = "../Artwork/PlayerBody.bmp";
-
-	SDL_Renderer* renderer;
-
-	SDL_Rect coords;
-	SDL_Surface* image;
-	SDL_Texture* texture;
+	// SDL_Rect variabler
+	int height;
+	int width;
+	int initXPos;
+	int initYPos;
 };
 
