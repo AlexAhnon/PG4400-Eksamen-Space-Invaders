@@ -18,7 +18,7 @@ Sprite::~Sprite()
 
 void Sprite::Draw()
 {
-	sprite = SDL_LoadBMP(imagePath);
+	sprite = IMG_Load(imagePath);
 	texture = SDL_CreateTextureFromSurface(renderer, sprite);
 }
 

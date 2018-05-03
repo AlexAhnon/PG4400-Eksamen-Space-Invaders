@@ -3,7 +3,7 @@
 Player::Player() {
 }
 
-Player::Player(SDL_Renderer* rend) : Sprite(renderer, "../Artwork/PlayerBody.bmp", 30, 50, 225, 500) {
+Player::Player(SDL_Renderer* rend) : Sprite(renderer, "../Artwork/PlayerBody.png", 30, 50, 225, 500) {
 	renderer = rend;
 	
 }
