@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL.h>
-#include "WindowManager.h"
 #include "Sprite.h"
 
 class Player : public Sprite {

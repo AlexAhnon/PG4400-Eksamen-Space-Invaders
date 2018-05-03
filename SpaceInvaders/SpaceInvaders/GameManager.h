@@ -1,10 +1,15 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_timer.h>
+#include <vector>
+#include <memory>
+#include <iostream>
+
 #include "WindowManager.h"
 #include "InputManager.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Projectile.h"
-#include <SDL_timer.h>
 
 class GameManager
 {
@@ -23,6 +28,10 @@ private:
 	WindowManager* winManager;
 	Player player;
 	Projectile projectile;
+
+	std::vector<Enemy> enemies;
+	int maxEnemyPerRow = 10;
+	int enemyRows = 5;
 
 	bool gameOver = false;
 	SDL_Event event;

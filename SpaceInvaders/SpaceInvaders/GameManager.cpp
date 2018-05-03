@@ -22,6 +22,33 @@ void GameManager::Initialize() {
 
 	// Spawn initializations
 	player.Draw();
+
+	// Spawning and initializing all enemies
+	for (int i = 0; i < enemyRows; i++) {
+		for (int j = 0; j < maxEnemyPerRow; j++) {
+			enemies.push_back(Enemy(winManager->getRenderer()));
+			std::cout << "Creating a new enemy." << std::endl;
+		}
+	}
+
+	int i = 0;
+	int xPos = 0;
+	int yPos = 0;
+
+	// Iterate through the vector and set correct enemy position, and then draw them
+	for (std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++, i++) {
+		if (i == 0) {
+			yPos = 0;
+		} else if (i % maxEnemyPerRow == 0) {
+			xPos = 0;
+			yPos += 40;
+		}
+
+		enemies[i].SetPos(xPos, yPos);
+		enemies[i].Draw();
+
+		xPos += 40;
+	}
 }
 
 void GameManager::Update() {
@@ -36,8 +63,21 @@ void GameManager::Update() {
 
 	// Player and enemy updates
 	player.RenderUpdate();
+
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i].RenderUpdate();
+	}
+
+	// Projectile update
 	projectile.RenderUpdate();
 	projectile.Update();
+
+	// Enemy hitbox update
+	for (int i = 0; i < enemies.size(); i++) {
+		if (SDL_HasIntersection(&projectile.getRect(), &enemies[i].getRect())) {
+			enemies.erase(enemies.begin() + i);
+		}
+	}
 }
 
 // Game-loop function
@@ -83,6 +123,10 @@ void GameManager::Run()
 				projectile = Projectile(winManager->getRenderer(), player);
 				projectile.Draw();
 				projectile.can_shoot = false;
+			}
+
+			for (int i = 0; i < enemies.size(); i++) {
+				enemies[i].MoveDown();
 			}
 		}
 

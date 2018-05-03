@@ -14,6 +14,10 @@ public:
 
 	int getX() { return rect.x; }
 	int getY() { return rect.y; }
+
+	SDL_Rect getRect() { return rect; }
+
+	void SetPos(int x, int y);
 protected:
 	const char* imagePath;
 	SDL_Renderer* renderer;

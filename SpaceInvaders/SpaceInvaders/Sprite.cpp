@@ -27,6 +27,12 @@ void Sprite::RenderUpdate()
 	SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
+void Sprite::SetPos(int x, int y)
+{
+	rect.x = x;
+	rect.y = y;
+}
+
 void Sprite::SetRect(int height, int width, int x, int y)
 {
 	rect.h = height;
