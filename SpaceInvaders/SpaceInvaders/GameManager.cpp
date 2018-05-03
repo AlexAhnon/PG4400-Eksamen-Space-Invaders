@@ -72,11 +72,22 @@ void GameManager::Update() {
 	projectile.RenderUpdate();
 	projectile.Update();
 
-	// Enemy hitbox update
+	// Enemy update
 	for (int i = 0; i < enemies.size(); i++) {
+		// If projectile hits an enemy, remove enemy and projectile
 		if (SDL_HasIntersection(&projectile.getRect(), &enemies[i].getRect())) {
 			enemies.erase(enemies.begin() + i);
+			projectile.Destroy();
+			projectile.canShoot = true;
 		}
+		// If an enemy collides with the player, it's game over
+		else if (SDL_HasIntersection(&player.getRect(), &enemies[i].getRect())) {
+			player.Destroy();
+			gameOver = true;
+		}
+
+		// Update enemy movement
+		enemies[i].Update();
 	}
 }
 
@@ -91,7 +102,7 @@ void GameManager::Run()
 		// Get frameStart at start of frame
 		frameStart = SDL_GetTicks();
 
-		// Update every frame
+		// Run Update() function for every frame
 		Update();
 
 		// Input functions go here
@@ -108,25 +119,21 @@ void GameManager::Run()
 		}
 
 		// Player controls while making sure sprite can't go out of bounds
-		if (inputManager->KeyStillDown(SDL_SCANCODE_A) && player.getX() > 0) {
+		if (inputManager->KeyStillDown(SDL_SCANCODE_LEFT) && player.getX() > 0) {
 			player.MoveLeft(3);
 		}
 
 		// Minus 50 to account for the width of the player sprite
-		if (inputManager->KeyStillDown(SDL_SCANCODE_D) && player.getX() < winManager->screenWidth - 50) {
+		if (inputManager->KeyStillDown(SDL_SCANCODE_RIGHT) && player.getX() < winManager->screenWidth - 50) {
 			player.MoveRight(3);
 		}
 
 		if (inputManager->KeyDown(SDL_SCANCODE_SPACE)) {
-			if (projectile.can_shoot == true)
+			if (projectile.canShoot == true)
 			{
 				projectile = Projectile(winManager->getRenderer(), player);
 				projectile.Draw();
-				projectile.can_shoot = false;
-			}
-
-			for (int i = 0; i < enemies.size(); i++) {
-				enemies[i].MoveDown();
+				projectile.canShoot = false;
 			}
 		}
 

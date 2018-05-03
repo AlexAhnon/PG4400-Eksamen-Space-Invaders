@@ -1,5 +1,2 @@
-﻿  GameManager.cpp
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\gamemanager.cpp(67): warning C4018: '<': signed/unsigned mismatch
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\gamemanager.cpp(76): warning C4018: '<': signed/unsigned mismatch
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\gamemanager.cpp(129): warning C4018: '<': signed/unsigned mismatch
+﻿  Enemy.cpp
   SpaceInvaders.vcxproj -> C:\Users\Alex\Documents\GitHub\PG4400-Eksamen-Space-Invaders\SpaceInvaders\Debug\SpaceInvaders.exe

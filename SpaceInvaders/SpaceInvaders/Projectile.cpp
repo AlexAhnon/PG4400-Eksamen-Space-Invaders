@@ -20,6 +20,6 @@ void Projectile::Update()
 {
 	rect.y -= 5;
 	if (rect.y == 0) {
-		can_shoot = true;
+		canShoot = true;
 	}
 }

@@ -11,6 +11,7 @@ public:
 
 	void Draw();
 	void RenderUpdate();
+	void Destroy();
 
 	int getX() { return rect.x; }
 	int getY() { return rect.y; }

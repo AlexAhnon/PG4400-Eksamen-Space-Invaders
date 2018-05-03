@@ -13,6 +13,6 @@ public:
 	
 	void Update();
 
-	bool can_shoot = true;
+	bool canShoot = true;
 };
 
