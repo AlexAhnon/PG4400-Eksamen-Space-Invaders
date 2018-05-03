@@ -1,5 +1,10 @@
-﻿  GameManager.cpp
-  Player.cpp
+﻿  stdafx.cpp
+  GameManager.cpp
+  InputManager.cpp
   main.cpp
+  Player.cpp
+  Projectile.cpp
+  Sprite.cpp
+  WindowManager.cpp
   Generating Code...
   SpaceInvaders.vcxproj -> C:\Users\Alex\Documents\GitHub\PG4400-Eksamen-Space-Invaders\SpaceInvaders\Debug\SpaceInvaders.exe

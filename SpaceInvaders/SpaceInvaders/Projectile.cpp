@@ -12,7 +12,6 @@ Projectile::Projectile(SDL_Renderer* rend, Player player) : Sprite(renderer, "..
 
 }
 
-
 Projectile::~Projectile()
 {
 }
