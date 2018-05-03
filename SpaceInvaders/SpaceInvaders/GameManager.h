@@ -15,6 +15,7 @@ public:
 	// Game-loop function
 	void Initialize();
 	void Update();
+	void Run();
 
 private:
 	InputManager* inputManager;

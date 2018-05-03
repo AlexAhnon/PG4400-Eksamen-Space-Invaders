@@ -24,24 +24,35 @@ void GameManager::Initialize() {
 	player.Spawn();
 }
 
+void GameManager::Update() {
+	// Update functions go here
+
+	// Window buffer updates
+	SDL_UpdateWindowSurface(winManager->getWindow());
+	winManager->UpdateWindow();
+
+	// Input update
+	inputManager->Update();
+
+	// Player and enemy updates
+	player.Update();
+}
+
 // Game-loop function
-void GameManager::Update()
+void GameManager::Run()
 {
+	// Initialize spawns and variables
+	Initialize();
+
 	while (!gameOver) {
 		// FPS regulator, source: https://www.youtube.com/watch?v=jzasDqPmtPI
 		// Get frameStart at start of frame
 		frameStart = SDL_GetTicks();
 
-		// Update functions go here
-		SDL_UpdateWindowSurface(winManager->getWindow());
-		inputManager->Update();
-
-		winManager->UpdateWindow();
-
-		player.Update();
+		// Update every frame
+		Update();
 
 		// Input functions go here
-
 		// Exit controls
 		if (SDL_PollEvent(&event)) {
 			if (event.type == SDL_KEYDOWN) {
