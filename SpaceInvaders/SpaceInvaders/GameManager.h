@@ -3,6 +3,7 @@
 #include "WindowManager.h"
 #include "InputManager.h"
 #include "Player.h"
+#include "Projectile.h"
 #include <SDL_timer.h>
 
 class GameManager
@@ -21,6 +22,7 @@ private:
 	InputManager* inputManager;
 	WindowManager* winManager;
 	Player player;
+	Projectile projectile;
 
 	bool gameOver = false;
 	SDL_Event event;
