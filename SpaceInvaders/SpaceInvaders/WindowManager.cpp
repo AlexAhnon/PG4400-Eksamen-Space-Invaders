@@ -24,15 +24,6 @@ int WindowManager::SetupWindow()
 		std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
-	
-	// Initialize PNG loading support
-	/*int flags = IMG_INIT_PNG;
-	int init = IMG_Init(flags);
-	if ((init&flags) != flags) {
-		printf("IMG_Init: Failed to initialize png support!\n");
-		printf("IMG_Init: %s\n", IMG_GetError());
-		return 1;
-	}*/
 
 	// Error checking for window
 	if (InitWindow() != 0) {
@@ -71,7 +62,6 @@ void WindowManager::DeleteWindow()
 	SDL_FreeSurface(surface);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	IMG_Quit();
 	SDL_Quit();
 }
 

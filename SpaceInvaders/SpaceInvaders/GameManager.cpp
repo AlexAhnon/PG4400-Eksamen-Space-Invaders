@@ -38,7 +38,6 @@ void GameManager::Update() {
 	player.RenderUpdate();
 	projectile.RenderUpdate();
 	projectile.Update();
-	//projectile.Update();
 }
 
 // Game-loop function
