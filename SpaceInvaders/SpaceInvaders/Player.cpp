@@ -32,12 +32,12 @@ void Player::Update() {
 }
 
 // Move player left
-void Player::moveLeft(int rate) {
+void Player::MoveLeft(int rate) {
 	coords.x = coords.x - rate;
 }
 
 // Move player right
-void Player::moveRight(int rate) {
+void Player::MoveRight(int rate) {
 	coords.x = coords.x + rate;
 }
 

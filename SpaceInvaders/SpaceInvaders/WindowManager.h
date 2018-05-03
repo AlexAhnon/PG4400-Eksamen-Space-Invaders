@@ -29,10 +29,10 @@ private:
 	const char* bgImage = "../Artwork/invaders.bmp";
 	const char* gameTitle = "Space Invaders";
 
-	int InitializeWindow();
-	int InitializeRenderer();
-	int InitializeSurface();
-	int InitializeTexture();
+	int InitWindow();
+	int InitRenderer();
+	int InitSurface();
+	int InitTexture();
 
 	static WindowManager* instance;
 

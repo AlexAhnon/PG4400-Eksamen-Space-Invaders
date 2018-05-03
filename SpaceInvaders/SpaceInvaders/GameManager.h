@@ -13,11 +13,13 @@ public:
 	static void Release();
 
 	// Game-loop function
+	void Initialize();
 	void Update();
 
 private:
 	InputManager* inputManager;
 	WindowManager* winManager;
+	Player player;
 
 	bool gameOver = false;
 	SDL_Event event;

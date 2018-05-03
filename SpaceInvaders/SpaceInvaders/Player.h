@@ -11,8 +11,8 @@ public:
 
 	void Spawn();
 	void Update();
-	void moveLeft(int rate);
-	void moveRight(int rate);
+	void MoveLeft(int rate);
+	void MoveRight(int rate);
 
 	int getX();
 private:

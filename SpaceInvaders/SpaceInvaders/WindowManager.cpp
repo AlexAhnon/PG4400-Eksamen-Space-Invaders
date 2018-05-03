@@ -26,25 +26,25 @@ int WindowManager::SetupWindow()
 	}
 
 	// Error checking for window
-	if (InitializeWindow() != 0) {
+	if (InitWindow() != 0) {
 		std::cerr << "Failed to create window. SDL_Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
 
 	// Error checking for renderer
-	if (InitializeRenderer() != 0) {
+	if (InitRenderer() != 0) {
 		std::cerr << "Failed to create renderer. SDL_Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
 
 	// Error checking for surface
-	if (InitializeSurface() != 0) {
+	if (InitSurface() != 0) {
 		std::cerr << "Failed to create surface and textures. SDL_Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
 
 	// Error checking for texture
-	if (InitializeTexture() != 0) {
+	if (InitTexture() != 0) {
 		std::cerr << "Failed to create surface and textures. SDL_Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
@@ -85,7 +85,7 @@ WindowManager::~WindowManager()
 }
 
 // Inintalize window
-int WindowManager::InitializeWindow()
+int WindowManager::InitWindow()
 {
 	window = SDL_CreateWindow(
 		gameTitle, // Title
@@ -105,7 +105,7 @@ int WindowManager::InitializeWindow()
 }
 
 // Initialize renderer
-int WindowManager::InitializeRenderer()
+int WindowManager::InitRenderer()
 {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
@@ -121,7 +121,7 @@ int WindowManager::InitializeRenderer()
 }
 
 // Initialize surface
-int WindowManager::InitializeSurface()
+int WindowManager::InitSurface()
 {
 	surface = SDL_LoadBMP(bgImage);
 
@@ -133,7 +133,7 @@ int WindowManager::InitializeSurface()
 }
 
 // Initialize texture
-int WindowManager::InitializeTexture()
+int WindowManager::InitTexture()
 {
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 

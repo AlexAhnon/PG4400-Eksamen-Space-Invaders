@@ -16,13 +16,17 @@ void GameManager::Release() {
 	instance = NULL;
 }
 
+void GameManager::Initialize() {
+	// Player and enemy class initializations
+	player = Player(winManager->getRenderer());
+
+	// Spawn initializations
+	player.Spawn();
+}
+
 // Game-loop function
 void GameManager::Update()
 {
-	Player player(winManager->getRenderer());
-
-	player.Spawn();
-
 	while (!gameOver) {
 		// FPS regulator, source: https://www.youtube.com/watch?v=jzasDqPmtPI
 		// Get frameStart at start of frame
@@ -52,12 +56,12 @@ void GameManager::Update()
 
 		// Player controls while making sure sprite can't go out of bounds
 		if (inputManager->KeyStillDown(SDL_SCANCODE_A) && player.getX() > 0) {
-			player.moveLeft(3);
+			player.MoveLeft(3);
 		}
 
 		// Minus 50 to account for the width of the player sprite
 		if (inputManager->KeyStillDown(SDL_SCANCODE_D) && player.getX() < winManager->screenWidth - 50) {
-			player.moveRight(3);
+			player.MoveRight(3);
 		}
 
 		// Get frameTime at end of frame
@@ -85,5 +89,8 @@ GameManager::GameManager()
 GameManager::~GameManager()
 {
 	inputManager->Release();
+	inputManager = NULL;
+
 	winManager->Release();
+	winManager = NULL;
 }
