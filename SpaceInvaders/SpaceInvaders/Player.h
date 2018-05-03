@@ -11,11 +11,5 @@ public:
 
 	void MoveLeft(int rate);
 	void MoveRight(int rate);
-private:
-	// SDL_Rect variabler
-	int height;
-	int width;
-	int initXPos;
-	int initYPos;
 };
 
