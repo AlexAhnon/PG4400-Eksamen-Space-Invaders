@@ -38,7 +38,6 @@ void GameManager::Update() {
 	player.RenderUpdate();
 	projectile.RenderUpdate();
 	projectile.Update();
-	//projectile.Update();
 }
 
 // Game-loop function
@@ -79,8 +78,12 @@ void GameManager::Run()
 		}
 
 		if (inputManager->KeyDown(SDL_SCANCODE_SPACE)) {
-			projectile = Projectile(winManager->getRenderer(), player);
-			projectile.Draw();
+			if (projectile.can_shoot == true)
+			{
+				projectile = Projectile(winManager->getRenderer(), player);
+				projectile.Draw();
+				projectile.can_shoot = false;
+			}
 		}
 
 		// Get frameTime at end of frame

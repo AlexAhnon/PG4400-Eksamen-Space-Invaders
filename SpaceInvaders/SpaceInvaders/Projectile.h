@@ -12,5 +12,7 @@ public:
 	~Projectile();
 	
 	void Update();
+
+	bool can_shoot = true;
 };
 
