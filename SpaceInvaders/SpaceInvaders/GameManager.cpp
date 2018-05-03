@@ -35,7 +35,10 @@ void GameManager::Update() {
 	inputManager->Update();
 
 	// Player and enemy updates
-	player.Update();
+	player.RenderUpdate();
+	projectile.RenderUpdate();
+	projectile.Update();
+	//projectile.Update();
 }
 
 // Game-loop function
@@ -73,6 +76,11 @@ void GameManager::Run()
 		// Minus 50 to account for the width of the player sprite
 		if (inputManager->KeyStillDown(SDL_SCANCODE_D) && player.getX() < winManager->screenWidth - 50) {
 			player.MoveRight(3);
+		}
+
+		if (inputManager->KeyDown(SDL_SCANCODE_SPACE)) {
+			projectile = Projectile(winManager->getRenderer(), player);
+			projectile.Draw();
 		}
 
 		// Get frameTime at end of frame

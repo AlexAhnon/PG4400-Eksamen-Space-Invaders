@@ -22,7 +22,7 @@ void Sprite::Draw()
 	texture = SDL_CreateTextureFromSurface(renderer, sprite);
 }
 
-void Sprite::Update()
+void Sprite::RenderUpdate()
 {
 	SDL_RenderCopy(renderer, texture, NULL, &rect);
 }

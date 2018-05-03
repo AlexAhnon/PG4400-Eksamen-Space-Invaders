@@ -10,7 +10,7 @@ public:
 	~Sprite();
 
 	void Draw();
-	void Update();
+	void RenderUpdate();
 
 	int getX() { return rect.x; }
 	int getY() { return rect.y; }
