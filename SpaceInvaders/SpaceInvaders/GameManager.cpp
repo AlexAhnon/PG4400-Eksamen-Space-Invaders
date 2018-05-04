@@ -50,8 +50,39 @@ void GameManager::Initialize() {
 	}
 }
 
+bool EnemyHit(Enemy enemy, std::vector<Projectile> &projectiles) {
+	for (std::vector<Projectile>::iterator proj = projectiles.begin(); proj != projectiles.end(); proj++) {
+		// If projectile hits an enemy, remove enemy and projectile
+		if (SDL_HasIntersection(&proj->getRect(), &enemy.getRect())) {
+			proj = projectiles.erase(proj);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void GameManager::Update() {
 	// Update functions go here
+
+
+	// Update projectiles
+	for (std::vector<Projectile>::iterator proj = projectiles.begin(); proj != projectiles.end();) {
+		proj->Update();
+		proj->RenderUpdate();
+
+		// Delete projectiles if out of bounds
+		if (proj->getY() == 0) {
+			proj = projectiles.erase(proj);
+		}
+		else {
+			++proj;
+		}	
+	}
+
+
+	// Player update
+	player.Update();
 
 	// Window buffer updates
 	SDL_UpdateWindowSurface(winManager->getWindow());
@@ -61,8 +92,7 @@ void GameManager::Update() {
 	inputManager->Update();
 
 	// Projectile update
-	projectile.RenderUpdate();
-	projectile.Update();
+
 
 	// Player and enemy render updates
 	player.RenderUpdate();
@@ -73,6 +103,7 @@ void GameManager::Update() {
 
 	// Enemy update
 	for (std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end();) {
+
 		// Update enemy movement
 		it->Update();
 
@@ -82,12 +113,9 @@ void GameManager::Update() {
 			std::cout << "You LOST the game! Boo!" << std::endl;
 			break;
 		}
-
 		// If projectile hits an enemy, remove enemy and projectile
-		if (SDL_HasIntersection(&projectile.getRect(), &it->getRect())) {
+		if (EnemyHit(*it, projectiles) == true) {
 			it = enemies.erase(it);
-			projectile.Destroy();
-			projectile.canShoot = true;
 		}
 		else {
 			++it;
@@ -99,6 +127,8 @@ void GameManager::Update() {
 		gameOver = true;
 		std::cout << "You WON the game! Hurray!" << std::endl;
 	}
+
+
 }
 
 // Game-loop function
@@ -140,11 +170,12 @@ void GameManager::Run()
 
 		// Press Space to shoot
 		if (inputManager->KeyDown(SDL_SCANCODE_SPACE)) {
-			if (projectile.canShoot == true)
+			if (player.can_shoot == true)
 			{
-				projectile = Projectile(winManager->getRenderer(), player);
+				Projectile projectile(Projectile(winManager->getRenderer(), player));
 				projectile.Draw();
-				projectile.canShoot = false;
+				projectiles.push_back(projectile);
+				player.can_shoot = false;
 			}
 		}
 
