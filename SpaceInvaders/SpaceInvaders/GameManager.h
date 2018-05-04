@@ -36,7 +36,8 @@ private:
 	int maxEnemyPerRow = 10;
 	int enemyRows = 2;
 
-	std::vector<Projectile> projectiles;
+	std::vector<Projectile> player_projectiles;
+	std::vector<Projectile> enemy_projectiles;
 
 	bool gameOver = false;
 	SDL_Event event;
