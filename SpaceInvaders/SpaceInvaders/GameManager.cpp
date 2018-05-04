@@ -27,7 +27,6 @@ void GameManager::Initialize() {
 	for (int i = 0; i < enemyRows; i++) {
 		for (int j = 0; j < maxEnemyPerRow; j++) {
 			enemies.push_back(Enemy(winManager->getRenderer()));
-			std::cout << "Creating a new enemy." << std::endl;
 		}
 	}
 
@@ -61,33 +60,44 @@ void GameManager::Update() {
 	// Input update
 	inputManager->Update();
 
-	// Player and enemy updates
+	// Projectile update
+	projectile.RenderUpdate();
+	projectile.Update();
+
+	// Player and enemy render updates
 	player.RenderUpdate();
 
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i].RenderUpdate();
 	}
 
-	// Projectile update
-	projectile.RenderUpdate();
-	projectile.Update();
-
 	// Enemy update
-	for (int i = 0; i < enemies.size(); i++) {
+	for (std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end();) {
+		// Update enemy movement
+		it->Update();
+
+		// If an enemy reaches the bottom of the screen,  thengame over
+		if (it->getY() > 490) {
+			gameOver = true;
+			std::cout << "You LOST the game! Boo!" << std::endl;
+			break;
+		}
+
 		// If projectile hits an enemy, remove enemy and projectile
-		if (SDL_HasIntersection(&projectile.getRect(), &enemies[i].getRect())) {
-			enemies.erase(enemies.begin() + i);
+		if (SDL_HasIntersection(&projectile.getRect(), &it->getRect())) {
+			it = enemies.erase(it);
 			projectile.Destroy();
 			projectile.canShoot = true;
 		}
-		// If an enemy collides with the player, it's game over
-		else if (SDL_HasIntersection(&player.getRect(), &enemies[i].getRect())) {
-			player.Destroy();
-			gameOver = true;
+		else {
+			++it;
 		}
+	}
 
-		// Update enemy movement
-		enemies[i].Update();
+	// Check if all enemies have been defeated
+	if (enemies.size() == 0) {
+		gameOver = true;
+		std::cout << "You WON the game! Hurray!" << std::endl;
 	}
 }
 
@@ -128,6 +138,7 @@ void GameManager::Run()
 			player.MoveRight(3);
 		}
 
+		// Press Space to shoot
 		if (inputManager->KeyDown(SDL_SCANCODE_SPACE)) {
 			if (projectile.canShoot == true)
 			{

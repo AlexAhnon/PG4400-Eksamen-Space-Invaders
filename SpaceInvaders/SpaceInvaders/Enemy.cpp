@@ -19,7 +19,7 @@ Enemy::Enemy(SDL_Renderer* rend) : Sprite(renderer, "../Artwork/GreenBody.bmp", 
 
 	// Vertical movement counters
 	downMoveCounter = 0;
-	maxDownCounter = 3;
+	maxDownCounter = 1;
 }
 
 

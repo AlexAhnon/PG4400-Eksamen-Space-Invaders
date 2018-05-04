@@ -30,7 +30,7 @@ void Sprite::RenderUpdate()
 void Sprite::Destroy() {
 	// Destroy the texture and free the surface
 	SDL_DestroyTexture(texture);
-	SDL_FreeSurface(sprite);
+	//SDL_FreeSurface(sprite);
 
 	// Set it to a random point outside of screen to get rid of rect
 	rect.x = -50;

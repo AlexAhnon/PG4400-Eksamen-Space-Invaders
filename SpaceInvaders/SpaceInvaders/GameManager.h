@@ -31,7 +31,7 @@ private:
 
 	std::vector<Enemy> enemies;
 	int maxEnemyPerRow = 10;
-	int enemyRows = 5;
+	int enemyRows = 2;
 
 	bool gameOver = false;
 	SDL_Event event;
