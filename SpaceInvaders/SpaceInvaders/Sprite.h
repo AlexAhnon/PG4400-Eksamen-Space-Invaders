@@ -6,7 +6,7 @@ class Sprite
 {
 public:
 	Sprite();
-	Sprite(SDL_Renderer *rend, const char* image, int height, int width, int x, int y);
+	Sprite(SDL_Renderer* rend, const char* image, int height, int width, int x, int y);
 	~Sprite();
 
 	void Draw();

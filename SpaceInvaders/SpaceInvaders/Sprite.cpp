@@ -4,7 +4,7 @@ Sprite::Sprite()
 {
 }
 
-Sprite::Sprite(SDL_Renderer *rend, const char* image, int height, int width, int x, int y)
+Sprite::Sprite(SDL_Renderer* rend, const char* image, int height, int width, int x, int y)
 {
 	imagePath = image;
 	renderer = rend;
