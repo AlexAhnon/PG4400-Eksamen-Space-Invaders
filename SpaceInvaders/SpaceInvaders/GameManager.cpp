@@ -96,11 +96,27 @@ void GameManager::Update() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3bb88005e7a7b387daa4a90cdfd722c0b45aad14
 	// Update enemy-projectiles
 	for (std::vector<Projectile>::iterator proj = enemy_projectiles.begin(); proj != enemy_projectiles.end();) {
 		proj->Update();
 		proj->RenderUpdate();
+<<<<<<< HEAD
+=======
+
+		// Delete projectiles if out of bounds
+		if (proj->getY() > 550) {
+			proj = enemy_projectiles.erase(proj);
+		}
+		else {
+			++proj;
+		}
+	}
+
+>>>>>>> 3bb88005e7a7b387daa4a90cdfd722c0b45aad14
 
 		// Delete projectiles if out of bounds
 		if (proj->getY() > 550) {
