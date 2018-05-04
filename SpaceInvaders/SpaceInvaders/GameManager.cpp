@@ -50,10 +50,10 @@ void GameManager::Initialize() {
 	}
 }
 
-bool EnemyHit(Enemy enemy, std::vector<Projectile> &projectiles) {
+bool OnHitCollision(SDL_Rect rect, std::vector<Projectile> &projectiles) {
 	for (std::vector<Projectile>::iterator proj = projectiles.begin(); proj != projectiles.end(); proj++) {
 		// If projectile hits an enemy, remove enemy and projectile
-		if (SDL_HasIntersection(&proj->getRect(), &enemy.getRect())) {
+		if (SDL_HasIntersection(&proj->getRect(), &rect)) {
 			proj = projectiles.erase(proj);
 			return true;
 		}
@@ -66,18 +66,32 @@ void GameManager::Update() {
 	// Update functions go here
 
 
-	// Update projectiles
-	for (std::vector<Projectile>::iterator proj = projectiles.begin(); proj != projectiles.end();) {
+	// Update player-projectiles
+	for (std::vector<Projectile>::iterator proj = player_projectiles.begin(); proj != player_projectiles.end();) {
 		proj->Update();
 		proj->RenderUpdate();
 
 		// Delete projectiles if out of bounds
-		if (proj->getY() == 0) {
-			proj = projectiles.erase(proj);
+		if (proj->getY() < 0) {
+			proj = player_projectiles.erase(proj);
 		}
 		else {
 			++proj;
 		}	
+	}
+
+	// Update enemy-projectiles
+	for (std::vector<Projectile>::iterator proj = enemy_projectiles.begin(); proj != enemy_projectiles.end();) {
+		proj->Update();
+		proj->RenderUpdate();
+
+		// Delete projectiles if out of bounds
+		if (proj->getY() > 550) {
+			proj = enemy_projectiles.erase(proj);
+		}
+		else {
+			++proj;
+		}
 	}
 
 
@@ -107,6 +121,13 @@ void GameManager::Update() {
 		// Update enemy movement
 		it->Update();
 
+
+		// Enemies shooting projectiles and adding to enemy_projectiles vector
+		Projectile projectile(Projectile(winManager->getRenderer(), *it));
+		projectile.Draw();
+		enemy_projectiles.push_back(projectile);
+		std::cout << enemy_projectiles.size() << std::endl;
+
 		// If an enemy reaches the bottom of the screen,  thengame over
 		if (it->getY() > 490) {
 			gameOver = true;
@@ -114,7 +135,7 @@ void GameManager::Update() {
 			break;
 		}
 		// If projectile hits an enemy, remove enemy and projectile
-		if (EnemyHit(*it, projectiles) == true) {
+		if (OnHitCollision(it->getRect(), player_projectiles) == true) {
 			it = enemies.erase(it);
 		}
 		else {
@@ -174,7 +195,7 @@ void GameManager::Run()
 			{
 				Projectile projectile(Projectile(winManager->getRenderer(), player));
 				projectile.Draw();
-				projectiles.push_back(projectile);
+				player_projectiles.push_back(projectile);
 				player.can_shoot = false;
 			}
 		}

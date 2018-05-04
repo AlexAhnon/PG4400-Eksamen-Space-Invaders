@@ -14,7 +14,7 @@ public:
 	~Projectile();
 	
 	void Update();
-private:
+
 	enum character_type {
 		_player,
 		_enemy
