@@ -9,16 +9,17 @@ class Projectile : public Sprite
 {
 public:
 	Projectile();
-	Projectile(SDL_Renderer * rend, Player player);
-	Projectile(SDL_Renderer * rend, Enemy enemy);
+	Projectile(SDL_Renderer* renderer, Player player);
+	Projectile(SDL_Renderer* renderer, Enemy enemy);
 	~Projectile();
 	
 	void Update();
 
-	enum character_type {
-		_player,
-		_enemy
+	enum CharacterType {
+		playerType,
+		enemyType
 	};
-	character_type type;
+
+	CharacterType type;
 };
 

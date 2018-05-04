@@ -17,59 +17,45 @@ void GameManager::Release() {
 }
 
 void GameManager::Initialize() {
+	// Initialize random seed based on time
+	std::srand(std::time(nullptr));
+
 	// HighScore initialization
-	scoreText = Text(winManager->getRenderer());
+	scoreText = Text(winManager->getRenderer(), 340, 520, 34, 150);
 	highScore = 0;
 
-	// Player and enemy class initializations
-	player = Player(winManager->getRenderer());
+	// Player Health text initilization
+	playerHealthText = Text(winManager->getRenderer(), 10, 520, 34, 150);
 
-	// Spawn initializations
+	// Player initializations
+	player = Player(winManager->getRenderer());
 	player.Draw();
 
-	// Spawning and initializing all enemies
-	for (int i = 0; i < enemyRows; i++) {
-		for (int j = 0; j < maxEnemyPerRow; j++) {
-			enemies.push_back(Enemy(winManager->getRenderer()));
-		}
-	}
+	// Spawn and initialize shields
+	Shield shield = Shield(winManager->getRenderer(), 80, 20, 450);
+	shield.Draw();
+	shields.push_back(shield);
 
-	int i = 0;
-	int xPos = 0;
-	int yPos = 0;
+	shield = Shield(winManager->getRenderer(), 80, 150, 450);
+	shield.Draw();
+	shields.push_back(shield);
 
-	// Iterate through the vector and set correct enemy position, and then draw them
-	for (std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++, i++) {
-		if (i == 0) {
-			yPos = 0;
-		} else if (i % maxEnemyPerRow == 0) {
-			xPos = 0;
-			yPos += 40;
-		}
+	shield = Shield(winManager->getRenderer(), 80, 280, 450);
+	shield.Draw();
+	shields.push_back(shield);
 
-		enemies[i].SetPos(xPos, yPos);
-		enemies[i].Draw();
+	shield = Shield(winManager->getRenderer(), 80, 410, 450);
+	shield.Draw();
+	shields.push_back(shield);
 
-		xPos += 40;
-	}
-}
-
-bool OnHitCollision(SDL_Rect rect, std::vector<Projectile> &projectiles) {
-	for (std::vector<Projectile>::iterator proj = projectiles.begin(); proj != projectiles.end(); proj++) {
-		// If projectile hits an enemy, remove enemy and projectile
-		if (SDL_HasIntersection(&proj->getRect(), &rect)) {
-			proj = projectiles.erase(proj);
-			return true;
-		}
-	}
-
-	return false;
+	// Spawn first wave of enemies
+	SpawnEnemyWave(1);
 }
 
 void GameManager::Update() {
 	// Update functions go here
-	// Text updates
 
+	// Text updates
 	// Combine highscore into a const char
 	std::string str;
 	std::stringstream ss;
@@ -78,63 +64,51 @@ void GameManager::Update() {
 
 	scoreText.Update(str.c_str());
 
+	// Reset and reuse stringstream for player health text
+	ss.str("");
+	ss.clear();
+	ss << "Hitpoints: " << player.hitpoints;
+	str = ss.str();
+
+	playerHealthText.Update(str.c_str());
+
+	// Shields decrease in width if they take damage
+	for (std::vector<Shield>::iterator it = shields.begin(); it != shields.end(); it++) {
+		if (OnHitCollision(it->getRect(), playerProjectiles) == true || OnHitCollision(it->getRect(), enemyProjectiles) == true) {
+			it->TakeDamage();
+		}
+
+		it->RenderUpdate();
+	}
 
 	// Update player-projectiles
-	for (std::vector<Projectile>::iterator proj = player_projectiles.begin(); proj != player_projectiles.end();) {
+	for (std::vector<Projectile>::iterator proj = playerProjectiles.begin(); proj != playerProjectiles.end();) {
 		proj->Update();
 		proj->RenderUpdate();
 
 		// Delete projectiles if out of bounds
 		if (proj->getY() < 0) {
-			proj = player_projectiles.erase(proj);
+			proj = playerProjectiles.erase(proj);
 		}
 		else {
 			++proj;
 		}	
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3bb88005e7a7b387daa4a90cdfd722c0b45aad14
 	// Update enemy-projectiles
-	for (std::vector<Projectile>::iterator proj = enemy_projectiles.begin(); proj != enemy_projectiles.end();) {
+	for (std::vector<Projectile>::iterator proj = enemyProjectiles.begin(); proj != enemyProjectiles.end();) {
 		proj->Update();
 		proj->RenderUpdate();
-<<<<<<< HEAD
-=======
 
 		// Delete projectiles if out of bounds
 		if (proj->getY() > 550) {
-			proj = enemy_projectiles.erase(proj);
+			proj = enemyProjectiles.erase(proj);
 		}
 		else {
 			++proj;
 		}
 	}
 
->>>>>>> 3bb88005e7a7b387daa4a90cdfd722c0b45aad14
-
-		// Delete projectiles if out of bounds
-		if (proj->getY() > 550) {
-			proj = enemy_projectiles.erase(proj);
-		}
-		else {
-			++proj;
-		}
-	}
-
-
->>>>>>> 3bb88005e7a7b387daa4a90cdfd722c0b45aad14
-=======
-
->>>>>>> parent of 657f5d9... Random stuff
-=======
-
->>>>>>> parent of 657f5d9... Random stuff
 	// Player update
 	player.Update();
 
@@ -145,11 +119,13 @@ void GameManager::Update() {
 	// Input update
 	inputManager->Update();
 
-	// Projectile update
-
-
 	// Player and enemy render updates
 	player.RenderUpdate();
+
+	// Player takes damage if hit by an enemy projectile
+	if (OnHitCollision(player.getRect(), enemyProjectiles) == true) {
+		player.hitpoints--;
+	}
 
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i].RenderUpdate();
@@ -161,41 +137,59 @@ void GameManager::Update() {
 		// Update enemy movement
 		it->Update();
 
+		// Random seed to determine if the enemy can shoot
+		int random = 1 + (std::rand() % 1000);
 
-		// Enemies shooting projectiles and adding to enemy_projectiles vector
-		Projectile projectile(Projectile(winManager->getRenderer(), *it));
-		projectile.Draw();
-		enemy_projectiles.push_back(projectile);
-		std::cout << enemy_projectiles.size() << std::endl;
+		// If conditions are met and enemy can shoot, then create projectile
+		if (random <= 2 && it->canShoot == true) {
+			// Enemies shooting projectiles and adding to enemy_projectiles vector
+			Projectile projectile(Projectile(winManager->getRenderer(), *it));
+			projectile.Draw();
+			enemyProjectiles.push_back(projectile);
+		}
 
 		// If an enemy reaches the bottom of the screen,  thengame over
-		if (it->getY() > 490) {
+		if(it->getY() > 490) {
 			gameOver = true;
 			std::cout << "You LOST the game! Boo!" << std::endl;
+			std::cout << "Your highscore was: " << highScore << " points." << std::endl;
 			break;
 		}
 		// If projectile hits an enemy, remove enemy and projectile
-		if (OnHitCollision(it->getRect(), player_projectiles) == true) {
+		if(OnHitCollision(it->getRect(), playerProjectiles) == true) {
 			it = enemies.erase(it);
-<<<<<<< HEAD
-			projectile.Destroy();
-			projectile.canShoot = true;
 			highScore += 100;
-=======
->>>>>>> cf210fe38152301892bd5783c38ec95a8c6b8823
 		}
 		else {
 			++it;
 		}
 	}
 
-	// Check if all enemies have been defeated
-	if (enemies.size() == 0) {
+	// Winning and losing conditions, reset shields if going to next wave
+	if (enemies.size() == 0 && enemyWaveNumber == 1) {
+		std::cout << "You beat the first wave of enemies!" << std::endl;
+		for (std::vector<Shield>::iterator it = shields.begin(); it != shields.end(); it++) {
+			it->Reset();
+		}
+		SpawnEnemyWave(2);
+	}
+	else if (enemies.size() == 0 && enemyWaveNumber == 2) {
+		std::cout << "You beat the second wave of enemies!" << std::endl;
+		for (std::vector<Shield>::iterator it = shields.begin(); it != shields.end(); it++) {
+			it->Reset();
+		}
+		SpawnEnemyWave(3);
+	}
+	else if (enemies.size() == 0 && enemyWaveNumber == 3) {
 		gameOver = true;
 		std::cout << "You WON the game! Hurray!" << std::endl;
+		std::cout << "Your highscore was: " << highScore << " points." << std::endl;
 	}
-
-
+	else if (player.hitpoints == 0) {
+		gameOver = true;
+		std::cout << "You LOST the game! Boo!" << std::endl;
+		std::cout << "Your highscore was: " << highScore << " points." << std::endl;
+	}
 }
 
 // Game-loop function
@@ -237,12 +231,12 @@ void GameManager::Run()
 
 		// Press Space to shoot
 		if (inputManager->KeyDown(SDL_SCANCODE_SPACE)) {
-			if (player.can_shoot == true)
+			if (player.canShoot == true)
 			{
 				Projectile projectile(Projectile(winManager->getRenderer(), player));
 				projectile.Draw();
-				player_projectiles.push_back(projectile);
-				player.can_shoot = false;
+				playerProjectiles.push_back(projectile);
+				player.canShoot = false;
 			}
 		}
 
@@ -254,6 +248,66 @@ void GameManager::Run()
 			SDL_Delay(frameDelay - frameTime);
 		}
 	}
+}
+
+void GameManager::SpawnEnemyWave(int level) {
+	// Spawning and initializing all enemies
+
+	int rowsOfEnemies;
+	int maxPerRow = 10;
+
+	// Spawns more enemies depending on level, adjust difficult and amount of enemies here
+	if (level == 1) {
+		enemyWaveNumber = 1;
+		rowsOfEnemies = 2;
+	}
+	else if (level == 2) {
+		enemyWaveNumber = 2;
+		rowsOfEnemies = 3;
+	}
+	else if (level == 3) {
+		enemyWaveNumber = 3;
+		rowsOfEnemies = 4;
+	}
+
+	for (int i = 0; i < rowsOfEnemies; i++) {
+		for (int j = 0; j < maxPerRow; j++) {
+			enemies.push_back(Enemy(winManager->getRenderer()));
+		}
+	}
+
+	int i = 0;
+	int xPos = 0;
+	int yPos = 0;
+
+	// Iterate through the vector and set correct enemy position, and then draw them
+	for (std::vector<Enemy>::iterator it = enemies.begin(); it != enemies.end(); it++, i++) {
+		if (i == 0) {
+			yPos = 0;
+		}
+		else if (i % maxPerRow == 0) {
+			xPos = 0;
+			yPos += 40;
+		}
+
+		enemies[i].SetPos(xPos, yPos);
+		enemies[i].Draw();
+
+		xPos += 40;
+	}
+}
+
+// Checks for collision between an object and a projectile
+bool GameManager::OnHitCollision(SDL_Rect rect, std::vector<Projectile>& projectiles) {
+	for (std::vector<Projectile>::iterator proj = projectiles.begin(); proj != projectiles.end(); proj++) {
+		// If projectile hits an enemy, remove enemy and projectile
+		if (SDL_HasIntersection(&proj->getRect(), &rect)) {
+			proj = projectiles.erase(proj);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 // Gets the singleton instances of the other classes and sets up the window
@@ -270,6 +324,13 @@ GameManager::GameManager()
 // Releases everything once game manager is destroyed
 GameManager::~GameManager()
 {
+	enemies.clear();
+
+	playerProjectiles.clear();
+	enemyProjectiles.clear();
+
+	shields.clear();
+
 	inputManager->Release();
 	inputManager = NULL;
 

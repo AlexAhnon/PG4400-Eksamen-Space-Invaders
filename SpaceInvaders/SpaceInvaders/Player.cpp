@@ -3,9 +3,9 @@
 Player::Player() {
 }
 
-Player::Player(SDL_Renderer* rend) : Sprite(renderer, "../Artwork/PlayerBody.bmp", 30, 50, 225, 500) {
-	renderer = rend;
-	can_shoot = true;
+Player::Player(SDL_Renderer* renderer) : Sprite(renderer, "../Artwork/PlayerBody.bmp", 30, 50, 225, 500) {
+	canShoot = true;
+	hitpoints = 3;
 }
 
 Player::~Player() {
@@ -23,10 +23,10 @@ void Player::MoveRight(int rate) {
 
 void Player::Update()
 {
-	if (reload_counter == reload_speed) {
-		can_shoot = true;
-		reload_counter = 0;
+	if (reloadCounter == reloadSpeed) {
+		canShoot = true;
+		reloadCounter = 0;
 	}
-	reload_counter++;
+	reloadCounter++;
 }
 

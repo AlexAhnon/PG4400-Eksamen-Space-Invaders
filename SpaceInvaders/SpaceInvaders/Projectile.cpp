@@ -6,16 +6,14 @@ Projectile::Projectile()
 {
 }
 
-Projectile::Projectile(SDL_Renderer* rend, Player player) : Sprite(renderer, "../Artwork/PlayerPro.bmp", 15, 5, player.getX()+22, player.getY())
+Projectile::Projectile(SDL_Renderer* renderer, Player player) : Sprite(renderer, "../Artwork/PlayerPro.bmp", 15, 5, player.getX() + 22, player.getY())
 {
-	renderer = rend;
-	type = _player;
+	type = playerType;
 }
 
-Projectile::Projectile(SDL_Renderer* rend, Enemy enemy) : Sprite(renderer, "../Artwork/PlayerPro.bmp", 15, 5, enemy.getX() + 22, enemy.getY())
+Projectile::Projectile(SDL_Renderer* renderer, Enemy enemy) : Sprite(renderer, "../Artwork/EnemyPro.bmp", 15, 5, enemy.getX() + 22, enemy.getY())
 {
-	renderer = rend;
-	type = _enemy;
+	type = enemyType;
 }
 
 Projectile::~Projectile()
@@ -24,10 +22,10 @@ Projectile::~Projectile()
 
 void Projectile::Update()
 {
-	if (type == _player) {
+	if (type == playerType) {
 		rect.y -= 5;
 	}
-	else if (type == _enemy) {
-		rect.y += 5;
+	else if (type == enemyType) {
+		rect.y += 3;
 	}
 }

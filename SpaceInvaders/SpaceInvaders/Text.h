@@ -6,7 +6,7 @@ class Text
 {
 public:
 	Text();
-	Text(SDL_Renderer* rend);
+	Text(SDL_Renderer* rend, int x, int y, int height, int width);
 	~Text();
 
 	void Update(const char* string);

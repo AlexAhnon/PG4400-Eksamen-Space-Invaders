@@ -2,16 +2,17 @@
 #include <SDL.h>
 #include <SDL_timer.h>
 #include <vector>
-#include <memory>
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 #include "WindowManager.h"
 #include "InputManager.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Projectile.h"
+#include "Shield.h"
 #include "Text.h"
 
 class GameManager
@@ -27,17 +28,20 @@ public:
 	void Run();
 
 private:
+	void SpawnEnemyWave(int level);
+	bool OnHitCollision(SDL_Rect rect, std::vector<Projectile> &projectiles);
+
 	InputManager* inputManager;
 	WindowManager* winManager;
 	Player player;
-	Projectile projectile;
 
+	int enemyWaveNumber;
 	std::vector<Enemy> enemies;
-	int maxEnemyPerRow = 10;
-	int enemyRows = 2;
 
-	std::vector<Projectile> player_projectiles;
-	std::vector<Projectile> enemy_projectiles;
+	std::vector<Projectile> playerProjectiles;
+	std::vector<Projectile> enemyProjectiles;
+
+	std::vector<Shield> shields;
 
 	bool gameOver = false;
 	SDL_Event event;
@@ -52,6 +56,8 @@ private:
 
 	Text scoreText;
 	int highScore;
+
+	Text playerHealthText;
 
 	GameManager();
 	~GameManager();

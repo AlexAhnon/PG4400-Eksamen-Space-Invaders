@@ -6,16 +6,17 @@ Text::Text()
 {
 }
 
-Text::Text(SDL_Renderer* rend)
+Text::Text(SDL_Renderer* rend, int x, int y, int height, int width)
 {
 	renderer = rend;
 
-	font = TTF_OpenFont("../Fonts/Sans.ttf", 18);
-	color = { 255, 255, 255 };
-	rect.x = 10;
-	rect.y = 5;
-	rect.h = 34;
-	rect.w = 150;
+	font = TTF_OpenFont("../Fonts/Sans.ttf", 18); // Font type
+	color = { 255, 255, 255 }; // White color
+
+	rect.x = x;
+	rect.y = y;
+	rect.h = height;
+	rect.w = width;
 }
 
 

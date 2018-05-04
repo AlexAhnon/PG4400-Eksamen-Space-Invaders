@@ -14,6 +14,8 @@ public:
 	void MoveLeft(int rate);
 	void MoveRight(int rate);
 	void MoveDown();
+
+	bool canShoot;
 private:
 	// Movement direction
 	int moveDirection;
@@ -25,5 +27,8 @@ private:
 	// Movement down screen
 	int downMoveCounter;
 	int maxDownCounter;
+
+	int reloadSpeed = 80;
+	int reloadCounter = 0;
 };
 

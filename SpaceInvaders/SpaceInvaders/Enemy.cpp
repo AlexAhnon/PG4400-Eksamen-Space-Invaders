@@ -6,10 +6,8 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(SDL_Renderer* rend) : Sprite(renderer, "../Artwork/GreenBody.bmp", 30, 30, 0, 0)
+Enemy::Enemy(SDL_Renderer* renderer) : Sprite(renderer, "../Artwork/EnemyBody.bmp", 30, 30, 0, 0)
 {
-	renderer = rend;
-
 	// Which direction to move in, 1 = right, 0 = left
 	moveDirection = 1;
 
@@ -56,6 +54,12 @@ void Enemy::Update()
 	}
 
 	moveCounter++;
+
+	if (reloadCounter == reloadSpeed) {
+		canShoot = true;
+		reloadCounter = 0;
+	}
+	reloadCounter++;
 }
 
 void Enemy::MoveLeft(int rate)
