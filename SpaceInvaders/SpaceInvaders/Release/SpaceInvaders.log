@@ -1,7 +1,29 @@
-﻿  stdafx.cpp
+﻿  Enemy.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\enemy.cpp(75): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  GameManager.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\gamemanager.cpp(188): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
   InputManager.cpp
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\inputmanager.cpp(46): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\inputmanager.cpp(54): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
   main.cpp
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(15): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(7): error C2065: 'GameManager': undeclared identifier
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(7): error C2065: 'gameManager': undeclared identifier
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(7): error C2653: 'GameManager': is not a class or namespace name
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(7): error C3861: 'getInstance': identifier not found
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(9): error C2065: 'gameManager': undeclared identifier
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(9): error C2227: left of '->Run' must point to class/struct/union/generic type
+  c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(9): note: type is 'unknown-type'
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(10): error C2065: 'gameManager': undeclared identifier
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(10): error C2227: left of '->Release' must point to class/struct/union/generic type
+  c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(10): note: type is 'unknown-type'
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(12): error C3861: 'system': identifier not found
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\main.cpp(13): error C2065: 'EXIT_SUCCESS': undeclared identifier
+  Player.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\player.cpp(23): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Projectile.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\projectile.cpp(26): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Sprite.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\sprite.cpp(53): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  Text.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\text.cpp(34): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
   WindowManager.cpp
-c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\windowmanager.cpp(51): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\windowmanager.cpp(174): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?

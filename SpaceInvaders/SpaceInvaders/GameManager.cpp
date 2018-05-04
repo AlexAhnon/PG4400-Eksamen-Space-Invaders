@@ -17,6 +17,10 @@ void GameManager::Release() {
 }
 
 void GameManager::Initialize() {
+	// HighScore initialization
+	scoreText = Text(winManager->getRenderer());
+	highScore = 0;
+
 	// Player and enemy class initializations
 	player = Player(winManager->getRenderer());
 
@@ -52,6 +56,15 @@ void GameManager::Initialize() {
 
 void GameManager::Update() {
 	// Update functions go here
+	// Text updates
+
+	// Combine highscore into a const char
+	std::string str;
+	std::stringstream ss;
+	ss << "Score: " << highScore;
+	str = ss.str();
+
+	scoreText.Update(str.c_str());
 
 	// Window buffer updates
 	SDL_UpdateWindowSurface(winManager->getWindow());
@@ -88,6 +101,7 @@ void GameManager::Update() {
 			it = enemies.erase(it);
 			projectile.Destroy();
 			projectile.canShoot = true;
+			highScore += 100;
 		}
 		else {
 			++it;
@@ -129,12 +143,12 @@ void GameManager::Run()
 		}
 
 		// Player controls while making sure sprite can't go out of bounds
-		if (inputManager->KeyStillDown(SDL_SCANCODE_LEFT) && player.getX() > 0) {
+		if (inputManager->KeyStillDown(SDL_SCANCODE_A) && player.getX() > 0) {
 			player.MoveLeft(3);
 		}
 
 		// Minus 50 to account for the width of the player sprite
-		if (inputManager->KeyStillDown(SDL_SCANCODE_RIGHT) && player.getX() < winManager->screenWidth - 50) {
+		if (inputManager->KeyStillDown(SDL_SCANCODE_D) && player.getX() < winManager->screenWidth - 50) {
 			player.MoveRight(3);
 		}
 

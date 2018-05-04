@@ -4,12 +4,15 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #include "WindowManager.h"
 #include "InputManager.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Projectile.h"
+#include "Text.h"
 
 class GameManager
 {
@@ -43,6 +46,9 @@ private:
 
 	Uint32 frameStart;
 	int frameTime;
+
+	Text scoreText;
+	int highScore;
 
 	GameManager();
 	~GameManager();

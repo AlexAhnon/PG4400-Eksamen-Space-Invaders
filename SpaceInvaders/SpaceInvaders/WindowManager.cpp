@@ -25,6 +25,13 @@ int WindowManager::SetupWindow()
 		return 1;
 	}
 
+	//Initialize SDL_ttf
+	if (TTF_Init() == -1)
+	{
+		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+		return 1;
+	}
+
 	// Error checking for window
 	if (InitWindow() != 0) {
 		std::cerr << "Failed to create window. SDL_Error: " << SDL_GetError() << std::endl;
