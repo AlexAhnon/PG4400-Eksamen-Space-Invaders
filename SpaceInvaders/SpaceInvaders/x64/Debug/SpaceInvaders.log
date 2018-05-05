@@ -1,0 +1,13 @@
+﻿  Enemy.cpp
+  GameManager.cpp
+c:\users\alex\documents\github\pg4400-eksamen-space-invaders\spaceinvaders\spaceinvaders\gamemanager.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  InputManager.cpp
+  main.cpp
+  Player.cpp
+  Projectile.cpp
+  Shield.cpp
+  Sprite.cpp
+  Text.cpp
+  WindowManager.cpp
+  Generating Code...
+  SpaceInvaders.vcxproj -> C:\Users\Alex\Documents\GitHub\PG4400-Eksamen-Space-Invaders\SpaceInvaders\x64\Debug\SpaceInvaders.exe

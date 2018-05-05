@@ -171,6 +171,7 @@ void GameManager::Update() {
 		for (std::vector<Shield>::iterator it = shields.begin(); it != shields.end(); it++) {
 			it->Reset();
 		}
+		player.hitpoints = 3;
 		SpawnEnemyWave(2);
 	}
 	else if (enemies.size() == 0 && enemyWaveNumber == 2) {
@@ -178,6 +179,7 @@ void GameManager::Update() {
 		for (std::vector<Shield>::iterator it = shields.begin(); it != shields.end(); it++) {
 			it->Reset();
 		}
+		player.hitpoints = 3;
 		SpawnEnemyWave(3);
 	}
 	else if (enemies.size() == 0 && enemyWaveNumber == 3) {
@@ -199,7 +201,6 @@ void GameManager::Run()
 	Initialize();
 
 	while (!gameOver) {
-		// FPS regulator, source: https://www.youtube.com/watch?v=jzasDqPmtPI
 		// Get frameStart at start of frame
 		frameStart = SDL_GetTicks();
 
